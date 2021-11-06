@@ -19,10 +19,9 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class ResponseCodeCondition extends ConditionPluginBase implements ContainerFactoryPluginInterface {
 
   /**
-   * @var RequestStack
+   * @var Symfony\Component\HttpFoundation\RequestStack
    */
   private $requestStack;
-
 
   /**
    * Creates a new Response code instance.
