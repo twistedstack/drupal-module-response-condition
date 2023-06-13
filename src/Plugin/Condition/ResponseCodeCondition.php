@@ -7,6 +7,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 /**
  * Provides a 'Response code' condition.
@@ -99,7 +100,10 @@ class ResponseCodeCondition extends ConditionPluginBase implements ContainerFact
       return TRUE;
     }
 
-    if (!$this->requestStack->getCurrentRequest()->attributes->has('exception')) {
+    if (
+      !$this->requestStack->getCurrentRequest()->attributes->has('exception') ||
+      !($this->requestStack->getCurrentRequest()->attributes->get('exception') instanceof HttpExceptionInterface)
+    ) {
       return FALSE;
     }
 
